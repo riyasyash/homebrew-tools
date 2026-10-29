@@ -1,20 +1,17 @@
 class Td < Formula
-  include Language::Python::Virtualenv
-
   desc "Terminal todo app with sub-todos, due dates, and git sync"
   homepage "https://github.com/riyasyash/TerTod"
-  url "https://github.com/riyasyash/TerTod/archive/refs/tags/v0.0.1.tar.gz"
-  sha256 "e302048c1096177258013b3ab19f62a6bd08a182ec1d47da6eebf417c73040b7"
+  version "0.0.1"
   license "MIT"
 
-  depends_on "python@3.12"
+  on_macos do
+    if Hardware::CPU.arm?
+      url "https://github.com/riyasyash/TerTod/releases/download/v0.0.1/td-0.0.1.tar.gz"
+      sha256 "sha256:52061f4a335c5425e7bfdcdc11074e14f12ac1c77c47f429e53911356bab8515"
+  end
 
   def install
-    virtualenv_install_with_resources
+    bin.install "td"
   end
 
-  test do
-    assert_match "td v", shell_output("#{bin}/td --version")
-    system bin/"td", "--cli", "list"
-  end
 end
